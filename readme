@@ -1,0 +1,11 @@
+lowcase file name:
+        ./authors/
+        ./title/
+lowcase content:
+        ./data/authors.json
+
+examples:
+        ./authors/copox.json
+        ./songs/0.json
+
+by 22/11/2019
