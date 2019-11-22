@@ -55,7 +55,7 @@ function mixBuffers(bufs){
     for(let i = 0;i<channelsNum;i++){
         let channel = songBuffer.getChannelData(i);
         for(let j = 0;j<bufs.length;j++){
-            channel.set(bufs[j].getChannelData(i),(j>0?buf[j-1].length:0));
+            channel.set(bufs[j].getChannelData(i),(j>0?bufs[j-1].length:0));
         }
     }
     songBufferList = [];
