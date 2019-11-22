@@ -121,7 +121,7 @@ function searchAuthorByName(keyword){
 function searchSongByAuthors(authors){
     var songs = [],id = new Array(133);
     for(let a of authors){
-        let t = fetchJSON('https://copox.github.io/Doc/HSM/authors/' + encodeURIComponent(a) + '.json');
+        let t = fetchJSON('./authors/' + encodeURIComponent(a) + '.json');
         if(t && t.songs.length){
             for(let s of t.songs){
                 let key = s.id%133;
@@ -142,7 +142,7 @@ function searchSongByAuthors(authors){
 function searchSongByName(keyword){
     var songs = [];
     let c = encodeURIComponent([...keyword][0]);
-    let t = fetchJSON('https://copox.github.io/Doc/HSM/title/' + c + '.json');
+    let t = fetchJSON('./title/' + c + '.json');
     if(t && t.songs){
         for(let e of t.songs){
             let f = true;
@@ -159,7 +159,7 @@ function searchSongByName(keyword){
     return songs;
 }
 
-var allAuthors = fetchJSON('https://copox.github.io/Doc/HSM/data/authors.json');
+var allAuthors = fetchJSON('./data/authors.json');
 
 
 
@@ -370,7 +370,7 @@ function getSongDetailById(id){
         authors:['loading ...'],
         url:''
     };
-    let r = fetchJSON('https://copox.github.io/Doc/HSM/songs/' + id + '.json');
+    let r = fetchJSON('./songs/' + id + '.json');
     if(r)
         s = r;
     return r;
