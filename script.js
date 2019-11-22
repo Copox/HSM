@@ -8,6 +8,9 @@ var streamStatus = {
     done:0
 }
 
+function encodeStr(s){
+    return encodeURIComponent(encodeURIComponent(s));
+}
 
 function createAudioContext() {
     try {
@@ -121,7 +124,7 @@ function searchAuthorByName(keyword){
 function searchSongByAuthors(authors){
     var songs = [],id = new Array(133);
     for(let a of authors){
-        let t = fetchJSON('./authors/' + encodeURIComponent(a) + '.json');
+        let t = fetchJSON('./authors/' + encodeStr(a) + '.json');
         if(t && t.songs.length){
             for(let s of t.songs){
                 let key = s.id%133;
@@ -141,7 +144,7 @@ function searchSongByAuthors(authors){
 
 function searchSongByName(keyword){
     var songs = [];
-    let c = encodeURIComponent([...keyword][0]);
+    let c = encodeStr([...keyword][0]);
     let t = fetchJSON('./title/' + c + '.json');
     if(t && t.songs){
         for(let e of t.songs){
