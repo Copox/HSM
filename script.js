@@ -51,7 +51,7 @@ function mixBuffers(bufs){
         len += e.length;
         channelsNum = Math.min(channelsNum,e.numberOfChannels);
     }
-    songBuffer = audioContext.createBuffer(channelsNum,len,bufs[0].numberOfChannels);
+    songBuffer = audioContext.createBuffer(channelsNum,len,bufs[0].sampleRate);
     for(let i = 0;i<channelsNum;i++){
         let channel = songBuffer.getChannelData(i);
         for(let j = 0;j<bufs.length;j++){
