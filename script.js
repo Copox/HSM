@@ -40,8 +40,27 @@ function createGainNode() {
 }
 
 
-var songBuffer = [];  
-function appendBuffer(buffer1, buffer2) {
+var songBufferList = [];  
+var songBuffer;
+
+function mixBuffers(bufs){
+    if(!bufs.length)
+        return;
+    let channelsNum = 0,len = 0;
+    for(let e of bufs){
+        len += e.length;
+        channelsNum = Math.min(channelsNum,e.numberOfChannels);
+    }
+    songBuffer = audioContext.createBuffer(channelsNum,len,bufs[0].numberOfChannels);
+    for(let i = 0;i<channelsNum;i++){
+        let channel = songBuffer.getChannelData(i);
+        for(let j = 0;j<bufs.length;j++){
+            channel.set(bufs[j].getChannelData(i),(j>0?buf[j-1].length:0));
+        }
+    }
+    songBufferList = [];
+}
+/*function appendBuffer(buffer1, buffer2) {
     var numberOfChannels = Math.min( buffer1.numberOfChannels, buffer2.numberOfChannels );
     var tmp = audioContext.createBuffer( numberOfChannels, (buffer1.length + buffer2.length), buffer1.sampleRate );
     for (var i=0; i<numberOfChannels; i++) {
@@ -50,7 +69,7 @@ function appendBuffer(buffer1, buffer2) {
       channel.set( buffer2.getChannelData(i), buffer1.length);
     }
     return tmp;
-  }
+}*/
 
 
 function getSong(key){
@@ -68,8 +87,9 @@ function getSong(key){
                 else
                     songBuffer = appendBuffer(songBuffer,buf);
                 */
-               songBuffer.push(buf);
+               songBufferList.push(buf);
                 if(streamStatus.done >= songScript.length){
+                    mixBuffers(songBufferList);
                     vm.$data.canPlaystream = true;
                     vm.$data.waitDialog = false;
                 }else{
@@ -82,6 +102,7 @@ function getSong(key){
         streamStatus.error++;
         streamStatus.done++;
         if(streamStatus.done >= songScript.length){
+            mixBuffers(songBufferList);
             vm.$data.canPlaystream = true;
             vm.$data.waitDialog = false;
         }else{
