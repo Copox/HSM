@@ -46,7 +46,7 @@ var songBuffer;
 function mixBuffers(bufs){
     if(!bufs.length)
         return;
-    let channelsNum = 0,len = 0;
+    let channelsNum = bufs[0].numberOfChannels,len = 0;
     for(let e of bufs){
         len += e.length;
         channelsNum = Math.min(channelsNum,e.numberOfChannels);
