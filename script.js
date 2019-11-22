@@ -40,7 +40,7 @@ function createGainNode() {
 }
 
 
-var songBuffer;  
+var songBuffer = [];  
 function appendBuffer(buffer1, buffer2) {
     var numberOfChannels = Math.min( buffer1.numberOfChannels, buffer2.numberOfChannels );
     var tmp = audioContext.createBuffer( numberOfChannels, (buffer1.length + buffer2.length), buffer1.sampleRate );
@@ -63,10 +63,12 @@ function getSong(key){
             if(!buf)
                 streamStatus.error++;
             else{
-                if(streamStatus.done === 1)
+                /*if(streamStatus.done === 1)
                     songBuffer = buf;
                 else
                     songBuffer = appendBuffer(songBuffer,buf);
+                */
+               songBuffer.push(buf);
                 if(streamStatus.done >= songScript.length){
                     vm.$data.canPlaystream = true;
                     vm.$data.waitDialog = false;
